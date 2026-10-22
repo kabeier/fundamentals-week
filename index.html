@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fundamentals Week</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#f4f6f9; --grid:#dce3ee; --ink:#1b2230; --muted:#5b6577; --blue:#2552c9; --green:#13795b; --sticky:#ffe76a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; color: var(--ink); font-size: 18px; line-height: 1.5;
+    background: var(--paper) linear-gradient(var(--grid) 1px, transparent 1px) -1px -1px / 40px 40px,
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px) -1px -1px / 40px 40px; }
+  main { max-width: 1240px; margin: 0 auto; padding: 64px 28px 80px; }
+  h1 { font: 800 clamp(44px, 7vw, 80px)/0.95 'Bricolage Grotesque', sans-serif; letter-spacing: -0.03em; margin: 0 0 16px; }
+  .lede { max-width: 60ch; color: var(--muted); font-size: 20px; margin: 0 0 48px; }
+  .lectures { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+  section { background: #fff; border: 2px solid var(--ink); border-radius: 4px; padding: 28px; }
+  .num { font: 800 64px/1 'Bricolage Grotesque', sans-serif; color: var(--blue); }
+  h2 { font: 800 30px/1.1 'Bricolage Grotesque', sans-serif; margin: 8px 0 6px; letter-spacing: -0.01em; }
+  section > p { margin: 0 0 22px; color: var(--muted); }
+  a.slides { display: block; background: var(--sticky); color: var(--ink); text-decoration: none; padding: 20px 22px; margin-bottom: 18px;
+    transform: rotate(-0.8deg); box-shadow: 0 10px 18px -10px rgb(27 34 48 / 0.45); transition: transform .15s; }
+  a.slides:hover, a.slides:focus-visible { transform: rotate(0deg) translateY(-2px); }
+  a.slides b { display: block; font: 800 26px 'Bricolage Grotesque', sans-serif; }
+  ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  ol a { display: block; padding: 14px 16px; border: 2px solid var(--grid); border-radius: 4px; color: var(--ink); text-decoration: none; }
+  ol a:hover, ol a:focus-visible { border-color: var(--blue); }
+  ol a b { color: var(--blue); }
+  ol a span { display: block; color: var(--muted); font-size: 16px; }
+  h3 { font: 800 26px 'Bricolage Grotesque', sans-serif; margin: 56px 0 14px; }
+  .kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .kit a { background: #fff; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; background: #fff; border: 2px solid var(--grid); border-radius: 4px; padding: 8px; }
+  .gallery img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; display: block; }
+  .gallery figcaption { font-size: 15px; padding: 6px 2px 0; display: flex; justify-content: space-between; gap: 8px; }
+  .gallery figcaption a { color: var(--blue); }
+  .install { margin-bottom: 20px; }
+  .install h4 { font: 800 21px 'Bricolage Grotesque', sans-serif; margin: 28px 0 6px; }
+  .install h4:first-child { margin-top: 0; }
+  .install .steps { display: block; list-style: decimal; padding-left: 1.4em; margin: 0 0 14px; }
+  .install .steps li::marker { font-weight: 700; color: var(--blue); } .install .steps li { margin-bottom: 12px; }
+  .os { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; }
+  .os h5 { font: 700 17px 'Bricolage Grotesque', sans-serif; margin: 6px 0 4px; }
+  @media (max-width: 760px) { .os { grid-template-columns: 1fr; } }
+  .install code { font-size: 0.9em; background: #e8ecf3; padding: 1px 5px; border-radius: 3px; }
+  .cmdwrap { position: relative; margin: 8px 0 6px; }
+  pre.cmd { background: var(--ink); color: #fff; padding: 16px 18px; padding-right: 90px; border-radius: 4px; overflow-x: auto; margin: 0; font-size: 15px; }
+  pre.cmd code { background: none; padding: 0; }
+  .copy { position: absolute; top: 10px; right: 10px; font: 700 14px 'Atkinson Hyperlegible'; padding: 6px 12px; border-radius: 4px; border: 0; background: var(--sticky); color: var(--ink); cursor: pointer; }
+  .fail { margin: 0 0 8px; padding: 14px 18px; background: var(--sticky); transform: rotate(-0.4deg); }
+  .install .steps a, details a { display: inline; padding: 0; border: 0; color: var(--blue); text-decoration: underline; }
+  details { margin: 6px 0 14px; }
+  summary { cursor: pointer; font-weight: 700; color: var(--blue); }
+  footer { margin-top: 56px; color: var(--muted); font-size: 16px; }
+  a:focus-visible, summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { a.slides { transition: none; } }
+  .install table { border-collapse: collapse; background: #fff; margin: 10px 0; font-size: 15px; display: block; overflow-x: auto; max-width: 100%; }
+  .install th, .install td { border: 1px solid var(--grid); padding: 6px 10px; text-align: left; }
+  .week { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 1000px) { .week { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .week { grid-template-columns: 1fr; } }
+  .day .dname { font-size: clamp(30px, 2.9vw, 38px); }
+  .day { position: relative; display: flex; flex-direction: column; }
+  .day .when { font: 700 15px 'Atkinson Hyperlegible', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .day .dname { font: 800 44px/1 'Bricolage Grotesque', sans-serif; color: var(--blue); margin: 2px 0 2px; }
+  .day h2 { font-size: 26px; margin: 10px 0 6px; }
+  .day > p { font-size: 16px; }
+  .day a.slides { margin-top: auto; margin-bottom: 14px; }
+  .day a.slides b { font-size: 22px; }
+  .day ol a { padding: 10px 12px; font-size: 16px; }
+  .day.today { border-color: var(--green); border-width: 4px; padding: 26px; }
+  .day .badge { display: none; position: absolute; top: -14px; right: 16px; background: var(--green); color: #fff; font: 800 14px 'Bricolage Grotesque', sans-serif; letter-spacing: .08em; padding: 4px 12px; border-radius: 3px; }
+  .day.today .badge { display: block; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Fundamentals Week</h1>
+  <p class="lede">Week of October 26: one topic a day, two lectures each. Every day's site has the slides, a code lab to follow along, the activity, and that day's homework. Everything opens in a new tab, so keep this page open as your home base.</p>
+
+  <div class="week">
+    <section class="day" data-date="2026-10-26">
+      <span class="badge">TODAY</span>
+      <div class="when">Oct 26</div>
+      <div class="dname">Monday</div>
+      <h2>Docker</h2>
+      <p>Containers, Dockerfiles, images, cleanup, bind mounts. Hands-on in the terminal.</p>
+      <a class="slides" href="https://kabeier.github.io/intro-docker/" target="_blank" rel="noopener"><b>Open Docker</b>Slides, labs, activities, homework</a>
+      <ol><li><a href="https://kabeier.github.io/intro-docker/lecture-1-intro-to-docker/slides.html" target="_blank" rel="noopener"><b>Lecture 1 slides</b><span>Introduction to Docker</span></a></li><li><a href="https://kabeier.github.io/intro-docker/lecture-2-leveraging-docker/slides.html" target="_blank" rel="noopener"><b>Lecture 2 slides</b><span>Leveraging Docker</span></a></li></ol>
+    </section>
+    <section class="day" data-date="2026-10-27">
+      <span class="badge">TODAY</span>
+      <div class="when">Oct 27</div>
+      <div class="dname">Tuesday</div>
+      <h2>JavaScript and Python</h2>
+      <p>The same ideas in both languages: types, collections, decisions, loops, functions. Code along.</p>
+      <a class="slides" href="https://kabeier.github.io/intro-js-py/" target="_blank" rel="noopener"><b>Open JavaScript and Python</b>Slides, labs, activities, homework</a>
+      <ol><li><a href="https://kabeier.github.io/intro-js-py/lecture-1-js-python-fundamentals/slides.html" target="_blank" rel="noopener"><b>Lecture 1 slides</b><span>JS & Python Fundamentals</span></a></li><li><a href="https://kabeier.github.io/intro-js-py/lecture-2-functional-programming/slides.html" target="_blank" rel="noopener"><b>Lecture 2 slides</b><span>Functional Programming</span></a></li></ol>
+    </section>
+    <section class="day" data-date="2026-10-28">
+      <span class="badge">TODAY</span>
+      <div class="when">Oct 28</div>
+      <div class="dname">Wednesday</div>
+      <h2>Test Driven Development</h2>
+      <p>Red, Green, Refactor with pytest, then Jest. Tests in Docker, exit codes, CI.</p>
+      <a class="slides" href="https://kabeier.github.io/intro-tdd/" target="_blank" rel="noopener"><b>Open Test Driven Development</b>Slides, labs, activities, homework</a>
+      <ol><li><a href="https://kabeier.github.io/intro-tdd/lecture-1-intro-to-tdd-w-pytest/slides.html" target="_blank" rel="noopener"><b>Lecture 1 slides</b><span>Intro to TDD with pytest</span></a></li><li><a href="https://kabeier.github.io/intro-tdd/lecture-2-tdd-w-jest/slides.html" target="_blank" rel="noopener"><b>Lecture 2 slides</b><span>TDD with Jest</span></a></li></ol>
+    </section>
+    <section class="day" data-date="2026-10-29">
+      <span class="badge">TODAY</span>
+      <div class="when">Oct 29</div>
+      <div class="dname">Thursday</div>
+      <h2>GitHub Actions</h2>
+      <p>Workflows that run your tests on every push and pull request. On your own GitHub repos.</p>
+      <a class="slides" href="https://kabeier.github.io/intro-github-actions/" target="_blank" rel="noopener"><b>Open GitHub Actions</b>Slides, labs, activities, homework</a>
+      <ol><li><a href="https://kabeier.github.io/intro-github-actions/lecture-1-intro-to-workflows/slides.html" target="_blank" rel="noopener"><b>Lecture 1 slides</b><span>Intro to Workflows</span></a></li><li><a href="https://kabeier.github.io/intro-github-actions/lecture-2-managing-workflows/slides.html" target="_blank" rel="noopener"><b>Lecture 2 slides</b><span>Managing Workflows</span></a></li></ol>
+    </section>
+  </div>
+
+  <footer>Earlier lectures: <a href="https://kabeier.github.io/SPAs-and-Claude/" target="_blank" rel="noopener">SPAs and Claude</a> · <a href="https://kabeier.github.io/Databases-and-Supabase/" target="_blank" rel="noopener">Databases and Supabase</a> · <a href="https://kabeier.github.io/Claude-and-full-stack-apps/" target="_blank" rel="noopener">Full-Stack Apps</a> · <a href="https://kabeier.github.io/Claude-and-auth/" target="_blank" rel="noopener">Authentication</a>.</footer>
+</main>
+<script>
+  // Mark today's card (in the viewer's own time zone)
+  const d = new Date(), today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+  document.querySelectorAll('.day').forEach((s) => s.classList.toggle('today', s.dataset.date === today))
+</script>
+</body>
+</html>
